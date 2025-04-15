@@ -24,7 +24,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development',
     ],
-    description='Examples of using MBF action interface via SMACH.',
+    description='Examples for using MBF action interface via SMACH.',
     license='BDF 3-clause',
     tests_require=['pytest'],
     entry_points={
