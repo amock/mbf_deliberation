@@ -1,6 +1,6 @@
 # mbf_deliberation
 
-This repository aims to provide a collection of examples for calling MBF actions, ranging from simple Python / C++ nodes to more sophisticated delibration libraries.
+This repository aims to provide a collection of examples for calling MBF actions, ranging from simple Python / C++ nodes to more sophisticated delibration libraries: https://github.com/ros-wg-delib/awesome-ros-deliberation.
 *Note*: This repository is compatible with every implementation listed in MBF, such as [mesh_navigation](github.com/naturerobots/mesh_navigation), ...
 
 
@@ -28,11 +28,17 @@ TODO
 
 Requirements: executive_smach
 
-TODO
+Link: https://github.com/ros/executive_smach
 
 ## BT.CPP
 
 TODO
+
+## Yasmin
+
+Link: https://github.com/uleroboticsgroup/yasmin
+
+
 
 
 
