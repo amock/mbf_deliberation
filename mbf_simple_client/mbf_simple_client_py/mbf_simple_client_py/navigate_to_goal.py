@@ -139,7 +139,7 @@ class MBFSimpleClientNode(Node):
 
         self._subscription = self.create_subscription(
             PoseStamped,
-            '/rviz/goal_pose',
+            '/goal_pose',
             self.goal_pose_cb,
             10)
         
