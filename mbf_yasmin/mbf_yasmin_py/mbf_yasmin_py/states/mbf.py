@@ -31,15 +31,15 @@ class MBFPlanningState(ActionState):
             self.print_feedback,  # callback to process the feedback
         )
 
-        if not self._node.has_parameter("global_planner"):
-            self._node.declare_parameter("global_planner", "")
+        if not self._node.has_parameter("planner"):
+            self._node.declare_parameter("planner", "")
 
 
     def create_goal_handler(self, blackboard: Blackboard) -> GetPath.Goal:
         goal = GetPath.Goal()
         goal.use_start_pose = False
         goal.target_pose = blackboard["target_pose"]  # Retrieve the input value 'n' from the blackboard
-        goal.planner = self._node.get_parameter("global_planner").get_parameter_value().string_value
+        goal.planner = self._node.get_parameter("planner").get_parameter_value().string_value
 
         goal.tolerance = 0.2
         return goal

@@ -14,11 +14,13 @@ static const char* xml_text = R"(
               topic_name="/goal_pose" 
               out_pose="{a_goal}"/>
         <MBFPlanningNode name="MBFPlanningNode" 
-              action_name="/move_base_flex/get_path" 
+              action_name="/move_base_flex/get_path"
+              planner_name="{planner_name}" 
               in_pose="{a_goal}" 
               out_path="{a_path}" />
         <MBFControlNode name="MBFControlNode" 
-              action_name="move_base_flex/exe_path" 
+              action_name="move_base_flex/exe_path"
+              controller_name="{controller_name}" 
               in_path="{a_path}" />
       </Sequence>
     </BehaviorTree>
@@ -29,6 +31,11 @@ int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
   auto nh = std::make_shared<rclcpp::Node>("navigate_to_pose");
+  nh.declare_parameter("planner", "");
+  nh.declare_parameter("controller", "");
+
+  std::string planner_name = nh.get_parameter("planner").as_string();
+  std::string controller_name = nh.get_parameter("controller").as_string();
 
   BehaviorTreeFactory factory;
 
@@ -37,7 +44,11 @@ int main(int argc, char** argv)
 
   RegisterRosNode(factory, "./install/mbf_btcpp/share/mbf_btcpp/bt_plugins/libmbf_btcpp_plugin.so", params);
 
-  auto tree = factory.createTreeFromText(xml_text);
+  auto blackboard = BT::Blackboard::create();
+  blackboard->set("planner_name", planner_name);
+  blackboard->set("controller_name", controller_name);
+
+  auto tree = factory.createTreeFromText(xml_text, blackboard);
 
   while(rclcpp::ok())
   {

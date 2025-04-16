@@ -34,7 +34,7 @@ class MBFPlanningState(smach_ros.SimpleActionState):
         goal.use_start_pose = False
         goal.tolerance = 0.2  # 20cm tolerance to the target
         goal.target_pose = user_data.target_pose
-        goal.planner = self.node.get_parameter("global_planner").get_parameter_value().string_value  # name of the planner to call see move base flex planners.yaml config
+        goal.planner = self.node.get_parameter("planner").get_parameter_value().string_value  # name of the planner to call see move base flex planners.yaml config
 
         print("Return goal!")
 

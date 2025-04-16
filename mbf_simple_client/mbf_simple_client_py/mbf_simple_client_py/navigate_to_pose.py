@@ -19,10 +19,10 @@ class GetPathClient:
     def __init__(self, node):
         self.node_ = node
 
-        self.node_.declare_parameter("global_planner", "mesh_planner")
-        self.global_planner_ = node.get_parameter('global_planner').get_parameter_value().string_value
-        if self.global_planner_ == "":
-            node.get_logger().error("Please set required parameter 'global_planner'")
+        self.node_.declare_parameter("planner", "mesh_planner")
+        self.planner_ = node.get_parameter('planner').get_parameter_value().string_value
+        if self.planner_ == "":
+            node.get_logger().error("Please set required parameter 'planner'")
             exit()
 
         self._get_path_client = ActionClient(node, 
@@ -37,7 +37,7 @@ class GetPathClient:
         goal_msg.use_start_pose = False
         goal_msg.tolerance = 0.2  # 20cm tolerance to the target
         goal_msg.target_pose = pose
-        goal_msg.planner = self.global_planner_  # name of the planner to call see move base flex planners.yaml config
+        goal_msg.planner = self.planner_  # name of the planner to call see move base flex planners.yaml config
 
         self._get_path_client.wait_for_server()
         self._send_goal_future = self._get_path_client.send_goal_async(

@@ -21,14 +21,14 @@ def main(args=None):
     def spin():
         rclpy.spin(node, executor=executor)
 
-    node.declare_parameter("global_planner", "")
+    node.declare_parameter("planner", "")
     node.declare_parameter("controller", "")
 
-    global_planner = node.get_parameter("global_planner").get_parameter_value().string_value
+    planner = node.get_parameter("planner").get_parameter_value().string_value
     controller = node.get_parameter("controller").get_parameter_value().string_value
 
-    if global_planner == "":
-        node.get_logger().warning("Required parameter not set: 'global_planner'!")
+    if planner == "":
+        node.get_logger().warning("Required parameter not set: 'planner'!")
 
     if controller == "":
         node.get_logger().warning("Required parameter not set: 'controller'!")

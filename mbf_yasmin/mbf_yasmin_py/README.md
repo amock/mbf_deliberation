@@ -3,7 +3,7 @@
 This example demonstrates how to trigger MBF actions from Yasmin using Python.
 
 ```bash
-ros2 run mbf_yasmin_py navigate_to_pose --ros-args -p global_planner:=mesh_planner -p controller:=mesh_controller
+ros2 run mbf_yasmin_py navigate_to_pose --ros-args -p planner:=mesh_planner -p controller:=mesh_controller
 ```
 
 
