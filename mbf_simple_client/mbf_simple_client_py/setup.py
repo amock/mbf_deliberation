@@ -29,7 +29,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'navigate_to_goal = mbf_simple_client_py.navigate_to_goal:main'
+            'navigate_to_pose = mbf_simple_client_py.navigate_to_pose:main'
         ],
     },
 )
