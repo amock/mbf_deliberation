@@ -1,0 +1,23 @@
+<package format="3">
+  <name>mbf_btcpp</name>
+  <version>0.0.1</version>
+  <description>
+  BT.CPP Nodes than can call MBF actions
+  </description>
+
+  <maintainer email="amock@uos.de">Alexander Mock</maintainer>
+  <license>BSD 3-clause</license>
+  <author>Alexander Mock</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>behaviortree_ros2</depend>
+  <depend>geometry_msgs</depend>
+  <depend>mbf_msgs</depend>
+  <depend>mesh_msgs</depend>
+
+<export>
+  <build_type>ament_cmake</build_type>
+</export>
+
+</package>
