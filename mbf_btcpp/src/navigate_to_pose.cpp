@@ -31,11 +31,21 @@ int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
   auto nh = std::make_shared<rclcpp::Node>("navigate_to_pose");
-  nh.declare_parameter("planner", "");
-  nh.declare_parameter("controller", "");
+  nh->declare_parameter("planner", "");
+  nh->declare_parameter("controller", "");
 
-  std::string planner_name = nh.get_parameter("planner").as_string();
-  std::string controller_name = nh.get_parameter("controller").as_string();
+  std::string planner_name = nh->get_parameter("planner").as_string();
+  std::string controller_name = nh->get_parameter("controller").as_string();
+
+  if(planner_name == "")
+  {
+    RCLCPP_WARN(nh->get_logger(), "Starting without 'planner'!");
+  }
+
+  if(controller_name == "")
+  {
+    RCLCPP_WARN(nh->get_logger(), "Starting without 'controller'!");
+  }
 
   BehaviorTreeFactory factory;
 
