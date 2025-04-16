@@ -5,16 +5,17 @@
 // mbf_msgs::action::GetPath::Goal
 bool MBFPlanningNode::setGoal(RosActionNode::Goal& goal)
 {
-  auto goal_pose = getInput<geometry_msgs::msg::PoseStamped>("goal_pose");
-  if(!goal_pose)
+  RCLCPP_INFO(logger(), "[%s] prepare goal", name().c_str());
+  auto in_pose = getInput<geometry_msgs::msg::PoseStamped>("in_pose");
+  if(!in_pose)
   {
-    throw BT::RuntimeError("Missing or malformed input [goal_pose]: " + goal_pose.error());
+    throw BT::RuntimeError("Missing or malformed input [in_pose]: " + in_pose.error());
   }
-  goal.target_pose = goal_pose.value();
-  
+  goal.target_pose = in_pose.value();
   goal.planner = "mesh_planner"; // TODO: ros parameter
   goal.tolerance = 0.2;
   goal.use_start_pose = false;
+  RCLCPP_INFO(logger(), "[%s] send goal", name().c_str());
   return true;
 }
 
@@ -22,7 +23,7 @@ NodeStatus MBFPlanningNode::onResultReceived(
   const RosActionNode::WrappedResult& wr)
 {
   RCLCPP_INFO(logger(), "%s onResultReceived", name().c_str());
-  setOutput("path", wr.result->path);
+  setOutput("out_path", wr.result->path);
   return NodeStatus::SUCCESS;// : NodeStatus::FAILURE;
 }
 
@@ -44,12 +45,12 @@ void MBFPlanningNode::onHalt()
 bool MBFControlNode::setGoal(RosActionNode::Goal& goal)
 {
   // auto timeout = getInput<unsigned>("msec");
-  auto path_in = getInput<nav_msgs::msg::Path>("path");
-  if(!path_in)
+  auto in_path = getInput<nav_msgs::msg::Path>("in_path");
+  if(!in_path)
   {
-    throw BT::RuntimeError("Missing or malformed input [path]: " + path_in.error());
+    throw BT::RuntimeError("Missing or malformed input [in_path]: " + in_path.error());
   }
-  goal.path = path_in.value();
+  goal.path = in_path.value();
   goal.controller = "mesh_controller";
   goal.dist_tolerance = 0.2;
 
