@@ -12,25 +12,19 @@ This node does not handle any edge cases and therefore does not trigger recovery
 
 ## MBF Simple Nav
 
-### Python Nodes
+### [Python Nodes](mbf_simple_client/mbf_simple_client_py)
 
 Calling MBF actions from plain Python ROS 2 nodes.
-
-See more examples here: [mbf_simple_client/mbf_simple_client_py](mbf_simple_client/mbf_simple_client_py) . 
 
 ```bash
 ros2 run mbf_simple_client_py navigate_to_pose --ros-args -p global_planner:="mesh_planner" -p controller:="mesh_controller"
 ```
 
-Replace the values for `global_planner` and `controller` with any planner or controller you defined in your MBF config.
-
-Publish a pose on topic `/goal_pose`.
-
-### CPP Node
+### CPP Nodes
 
 TODO
 
-## SMACH
+## [SMACH](mbf_smach)
 
 Requirements: 
 - [executive_smach](https://github.com/ros/executive_smach), available in official apt repositories. *Warning*: Unless PR [#129](https://github.com/ros/executive_smach/pull/129) is not merged use [this](https://github.com/amock/executive_smach/tree/remove-done-cond) on branch `remove-done-cond` and compile from source. Otherwise it will not work (tested for ROS 2 humble).
@@ -48,7 +42,7 @@ TODO
 Requirements: 
 - [Yasmin](https://github.com/uleroboticsgroup/yasmin), available in official apt repositories
 
-### Yasmin, Python API
+### [Yasmin, Python API](mbf_yasmin/mbf_yasmin_py)
 
 ```bash
 ros2 run mbf_yasmin_py navigate_to_pose --ros-args -p global_planner:="mesh_planner" -p controller:="mesh_controller"
