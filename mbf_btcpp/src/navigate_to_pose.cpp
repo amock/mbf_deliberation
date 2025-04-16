@@ -9,17 +9,28 @@
 using namespace BT;
 
 // Simple tree, used to execute once each action.
-static const char* xml_text = R"(
-  <root BTCPP_format="4">
-      <BehaviorTree>
-         <Sequence>
-            <WaitForPose name="WaitForPose" topic_name="/goal_pose" goal_pose="{goal_pose}"/>
-            <MBFPlanningNode name="MBFPlanningNode" action_name="move_base_flex/get_path" goal_pose="{goal_pose}" path="{path}" />
-            <MBFControlNode name="MBFControlNode" action_name="move_base_flex/exe_path" path="{path}" />
-         </Sequence>
-      </BehaviorTree>
-  </root>
-  )";
+// static const char* xml_text = R"(
+//   <root BTCPP_format="4">
+//       <BehaviorTree>
+//          <Sequence>
+//             <WaitForPose name="WaitForPose" topic_name="/goal_pose" goal_pose="{goal_pose}"/>
+//             <MBFPlanningNode name="MBFPlanningNode" action_name="move_base_flex/get_path" goal_pose="{goal_pose}" path="{path}" />
+//             <MBFControlNode name="MBFControlNode" action_name="move_base_flex/exe_path" path="{path}" />
+//          </Sequence>
+//       </BehaviorTree>
+//   </root>
+//   )";
+
+  static const char* xml_text = R"(
+    <root BTCPP_format="4">
+        <BehaviorTree>
+           <Sequence>
+              <WaitForPose name="WaitForPose" topic_name="/goal_pose" goal_pose="{bla}" />
+              <MBFPlanningNode name="MBFPlanningNode" action_name="/move_base_flex/get_path" goal_pose="{bla}" />
+           </Sequence>
+        </BehaviorTree>
+    </root>
+    )";
 
 int main(int argc, char** argv)
 {
@@ -36,7 +47,12 @@ int main(int argc, char** argv)
 
   auto tree = factory.createTreeFromText(xml_text);
 
-  for(int i = 0; i < 5; i++)
+  // for(int i = 0; i < 5; i++)
+  // {
+  //   tree.tickWhileRunning();
+  // }
+
+  while(rclcpp::ok())
   {
     tree.tickWhileRunning();
   }

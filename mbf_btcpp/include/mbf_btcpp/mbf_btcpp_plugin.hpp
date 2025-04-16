@@ -1,12 +1,14 @@
 
 
 #include <behaviortree_ros2/bt_action_node.hpp>
+#include <behaviortree_ros2/bt_topic_sub_node.hpp>
 #include <mbf_msgs/action/get_path.hpp>
 #include <mbf_msgs/action/exe_path.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <nav_msgs/msg/path.hpp>
 #include <sstream>
 #include <string>
+#include <std_msgs/msg/string.hpp>
 
 using namespace BT;
 
@@ -113,102 +115,32 @@ inline std::string toStr(
 } // namespace BT
 
 
-class WaitForPose : public BT::StatefulActionNode
+
+
+class WaitForPose : public RosTopicSubNode<geometry_msgs::msg::PoseStamped>
 {
 public:
-
-
-
-
-  WaitForPose(const std::string& name, 
-      const NodeConfig& conf,
-      const RosNodeParams& params)
-  : BT::StatefulActionNode(name, conf)
-  , node_(params.nh)
-  , message_received_(false)
-  {
-    std::cout << "LOCK" << std::endl;
-    auto node = node_.lock();
-
-    if(!node)
-    {
-      throw RuntimeError("The ROS node went out of scope. RosNodeParams doesn't take the "
-                        "ownership of the node.");
-    }
-    
-    auto topic_name = getInput<std::string>("topic_name");
-    if(!topic_name)
-    {
-      throw BT::RuntimeError("Missing or malformed input [topic_name]: " + topic_name.error());
-    }
-    
-    std::cout << "Connecting to topic: " << topic_name.value() << std::endl;
-    
-    create_subscriber(node, topic_name.value());
-
-    std::cout << "Connected." << std::endl;
-  }
-
-  void create_subscriber(std::shared_ptr<rclcpp::Node> node, const std::string& topic_name)
-  {
-    // create a callback group for this particular instance
-    callback_group_ =
-      node->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
-    callback_group_executor_.add_callback_group(callback_group_,
-                                            node->get_node_base_interface());
-
-    rclcpp::SubscriptionOptions option;
-    option.callback_group = callback_group_;
-
-    // The callback will broadcast to all the instances of RosTopicSubNode<T>
-    auto callback = [this](const std::shared_ptr<geometry_msgs::msg::PoseStamped> msg) {
-      last_msg_ = *msg;
-      message_received_ = true;
-    };
-    sub_ = node->create_subscription<geometry_msgs::msg::PoseStamped>(topic_name, 1, callback, option);
-  }
+  WaitForPose(const std::string& name, const NodeConfig& conf,
+                const RosNodeParams& params)
+    : RosTopicSubNode<geometry_msgs::msg::PoseStamped>(name, conf, params)
+  {}
 
   static BT::PortsList providedPorts()
   {
-    return {
-      BT::InputPort<std::string>("topic_name"),
-      BT::OutputPort<geometry_msgs::msg::PoseStamped>("goal_pose")
-    };
+    return providedBasicPorts({
+      OutputPort<geometry_msgs::msg::PoseStamped>("goal_pose"),
+    });
   }
 
-  BT::NodeStatus onStart() override
+  NodeStatus onTick(const std::shared_ptr<geometry_msgs::msg::PoseStamped>& last_msg) override
   {
-    message_received_ = false;
-    return BT::NodeStatus::RUNNING;
-  }
-
-  BT::NodeStatus onRunning() override
-  {
-    if(message_received_)
+    if(last_msg)  // empty if no new message received, since the last tick
     {
-      std::cout << "message received 2" << std::endl;
-      setOutput("goal_pose", last_msg_);
-      return BT::NodeStatus::SUCCESS;
+      RCLCPP_INFO(logger(), "[%s] new message", name().c_str());
     }
-    return BT::NodeStatus::RUNNING;
+    return NodeStatus::SUCCESS;
   }
-
-  void onHalted() override
-  {
-    // Nothing special here
-  }
-
-private:
-
-  std::weak_ptr<rclcpp::Node> node_;
-  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_;
-  rclcpp::CallbackGroup::SharedPtr callback_group_;
-  rclcpp::executors::SingleThreadedExecutor callback_group_executor_;
-  geometry_msgs::msg::PoseStamped last_msg_;
-  std::atomic<bool> message_received_;
 };
-
-
 
 class MBFPlanningNode 
 : public RosActionNode<mbf_msgs::action::GetPath>
