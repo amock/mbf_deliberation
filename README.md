@@ -60,12 +60,20 @@ Requirements:
 ros2 run mbf_yasmin_py navigate_to_pose --ros-args -p global_planner:="mesh_planner" -p controller:="mesh_controller"
 ```
 
+<details>
+<summary>Visualization</summary>
+
 Run visualization server of Yasmin:
 
 ```bash
-
+ros2 run yasmin_viewer yasmin_viewer_node
 ```
 
+Open your web-browser on http://localhost:5000 . For mesh navigation the result should look like this:
 
+![MBF Yasmin](./mbf_yasmin/mbf_yasmin_py/.media/mbf_yasmin.png)
 
+Set a goal via RViz 2D Goal Pose tool and you'll see the state machine transitions in your browser.
+
+</details>
 
