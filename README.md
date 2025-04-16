@@ -33,17 +33,11 @@ TODO
 ## SMACH
 
 Requirements: 
-- executive_smach
-
-Link: https://github.com/ros/executive_smach
-
-*Warning*: Unless PR [#129](https://github.com/ros/executive_smach/pull/129) is not merged use [this](https://github.com/amock/executive_smach/tree/remove-done-cond) on branch `remove-done-cond`. Otherwise it will not work (tested for ROS 2 humble).
+- [executive_smach](https://github.com/ros/executive_smach), available in official apt repositories. *Warning*: Unless PR [#129](https://github.com/ros/executive_smach/pull/129) is not merged use [this](https://github.com/amock/executive_smach/tree/remove-done-cond) on branch `remove-done-cond` and compile from source. Otherwise it will not work (tested for ROS 2 humble).
 
 ```bash
 ros2 run mbf_smach navigate_to_pose --ros-args -p global_planner:="mesh_planner" -p controller:="mesh_controller"
 ```
-
-(I haven't found a viewer that is working out of the box)
 
 ## BT.CPP
 
