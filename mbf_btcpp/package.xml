@@ -15,6 +15,7 @@
   <depend>geometry_msgs</depend>
   <depend>mbf_msgs</depend>
   <depend>mesh_msgs</depend>
+  <depend>ament_index_cpp</depend>
 
 <export>
   <build_type>ament_cmake</build_type>

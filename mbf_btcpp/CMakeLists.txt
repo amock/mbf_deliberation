@@ -8,11 +8,13 @@ find_package(ament_cmake REQUIRED)
 find_package(behaviortree_ros2 REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(mbf_msgs REQUIRED)
+find_package(ament_index_cpp REQUIRED)
 
 set(THIS_PACKAGE_DEPS
     behaviortree_ros2
     geometry_msgs
-    mbf_msgs)
+    mbf_msgs
+    ament_index_cpp)
 
 
 add_library(mbf_btcpp_plugin SHARED

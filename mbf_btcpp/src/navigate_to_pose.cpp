@@ -4,6 +4,9 @@
 
 #include "behaviortree_ros2/plugins.hpp"
 
+#include "ament_index_cpp/get_package_share_directory.hpp"
+
+
 using namespace BT;
 
 static const char* xml_text = R"(
@@ -52,7 +55,10 @@ int main(int argc, char** argv)
   RosNodeParams params;
   params.nh = nh;
 
-  RegisterRosNode(factory, "./install/mbf_btcpp/share/mbf_btcpp/bt_plugins/libmbf_btcpp_plugin.so", params);
+  std::string share_dir = ament_index_cpp::get_package_share_directory("mbf_btcpp");
+
+  std::cout << "Loading plugins from " << share_dir << std::endl;
+  RegisterRosNode(factory, share_dir + "/bt_plugins/libmbf_btcpp_plugin.so", params);
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("planner_name", planner_name);
