@@ -1,6 +1,6 @@
 # mbf_deliberation
 
-This repository provides a collection of examples for calling [move_base_flex (MBF)](https://github.com/naturerobots/move_base_flex) actions, ranging from simple Python and C++ nodes to more sophisticated deliberation libraries like [awesome-ros-deliberation](https://github.com/ros-wg-delib/awesome-ros-deliberation). All packages in this repository are compatible with any implementation that inherits from MBF, such as [mesh_navigation](https://github.com/naturerobots/mesh_navigation). Each package includes examples showing how MBF can be integrated into the respective framework across different use cases.
+This repository provides a collection of examples for calling [move_base_flex (MBF)](https://github.com/naturerobots/move_base_flex) actions, ranging from simple Python and C++ nodes to more sophisticated deliberation libraries, see [awesome-ros-deliberation](https://github.com/ros-wg-delib/awesome-ros-deliberation). All packages in this repository are compatible with any implementation that inherits from MBF, such as [mesh_navigation](https://github.com/naturerobots/mesh_navigation). Each package includes examples showing how MBF can be integrated into the respective framework across different use cases.
 
 For consistency, all packages include a minimalistic node named `navigate_to_pose` which:
 
