@@ -20,9 +20,9 @@ Calling MBF actions from plain Python ROS 2 nodes.
 ros2 run mbf_simple_client_py navigate_to_pose --ros-args -p planner:="mesh_planner" -p controller:="mesh_controller"
 ```
 
-### CPP Nodes
+<!-- ### CPP Nodes
 
-TODO
+TODO -->
 
 ## [SMACH](mbf_smach)
 
