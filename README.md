@@ -33,7 +33,7 @@ Requirements:
 ros2 run mbf_smach navigate_to_pose --ros-args -p planner:="mesh_planner" -p controller:="mesh_controller"
 ```
 
-## BT.CPP
+## [BT.CPP](mbf_btcpp)
 
 Requirements:
 - [BT.CPP](https://www.behaviortree.dev/), available in official apt repositories
