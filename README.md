@@ -35,7 +35,13 @@ ros2 run mbf_smach navigate_to_pose --ros-args -p planner:="mesh_planner" -p con
 
 ## BT.CPP
 
-TODO
+Requirements:
+- [BT.CPP](https://www.behaviortree.dev/), available in official apt repositories
+- [BehaviorTree.ROS2](https://github.com/BehaviorTree/BehaviorTree.ROS2), on humble you have to compile this from source
+
+```bash
+ros2 run mbf_btcpp navigate_to_pose --ros-args -p planner:="mesh_planner" -p controller:="mesh_controller"
+```
 
 ## Yasmin
 
