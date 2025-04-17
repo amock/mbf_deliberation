@@ -55,6 +55,7 @@ public:
   static BT::PortsList providedPorts()
   {
     return providedBasicPorts({ 
+      InputPort<std::string>("planner_name"),
       InputPort<geometry_msgs::msg::PoseStamped>("in_pose"),
       OutputPort<nav_msgs::msg::Path>("out_path")
     });
@@ -82,8 +83,9 @@ public:
 
   static BT::PortsList providedPorts()
   {
-    return providedBasicPorts({ 
-      InputPort<nav_msgs::msg::Path>("in_path") 
+    return providedBasicPorts({
+      InputPort<std::string>("controller_name"),
+      InputPort<nav_msgs::msg::Path>("in_path")
     });
   }
 

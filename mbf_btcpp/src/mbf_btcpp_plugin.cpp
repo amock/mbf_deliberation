@@ -11,8 +11,15 @@ bool MBFPlanningNode::setGoal(RosActionNode::Goal& goal)
   {
     throw BT::RuntimeError("Missing or malformed input [in_pose]: " + in_pose.error());
   }
+
+  auto planner_name = getInput<std::string>("planner_name");
+  if(!planner_name)
+  {
+    throw BT::RuntimeError("Missing or malformed input [planner_name]: " + planner_name.error());
+  }
+
   goal.target_pose = in_pose.value();
-  goal.planner = "mesh_planner"; // TODO: ros parameter
+  goal.planner = planner_name.value();
   goal.tolerance = 0.2;
   goal.use_start_pose = false;
   RCLCPP_INFO(logger(), "[%s] send goal", name().c_str());
@@ -50,8 +57,15 @@ bool MBFControlNode::setGoal(RosActionNode::Goal& goal)
   {
     throw BT::RuntimeError("Missing or malformed input [in_path]: " + in_path.error());
   }
+
+  auto controller_name = getInput<std::string>("controller_name");
+  if(!controller_name)
+  {
+    throw BT::RuntimeError("Missing or malformed input [controller_name]: " + controller_name.error());
+  }
+
   goal.path = in_path.value();
-  goal.controller = "mesh_controller";
+  goal.controller = controller_name.value();
   goal.dist_tolerance = 0.2;
 
   return true;
